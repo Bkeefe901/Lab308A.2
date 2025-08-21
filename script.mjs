@@ -70,34 +70,36 @@ class Adventurer extends Character {
     constructor(name, role) {
         super(name);
         //Adventurers have specialized roles.
-        if(!Adventurer.ROLES.includes(role)){
+        if (!Adventurer.ROLES.includes(role)) {
             console.log('This role does not exist!');
-        } else{
+        } else {
             this.role = role;
         }
-        
+
         // Every adventurer starts with a bed and 50 gold coins.
         this.inventory.push("bedroll", "50 gold coins");
     }
-    
+
     // Adventurers have the ability to scout ahead of them.
     scout() {
         console.log(`${this.name} is scouting ahead...`);
         super.roll();
     }
     duel(Opp) {
-        let roll1 = super.roll();
-        let roll2 = super.roll();
-        if (roll1 > roll2){
-            Opp.health = Opp.health - 1;
-            console.log(`The winner of this round is ${this.name}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
-            
-        } else if(roll2 > roll1){
-            this.health =  this.health - 1;
-            console.log(`The winner of this round is ${Opp.name}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
-        } 
-        
-        
+        while (this.health >= 50 && Opp.health >= 50) {
+            let roll1 = super.roll();
+            let roll2 = super.roll();
+            if (roll1 > roll2) {
+                Opp.health = Opp.health - 1;
+                console.log(`The winner of this round is ${this.name}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
+
+            } else if (roll2 > roll1) {
+                this.health = this.health - 1;
+                console.log(`The winner of this round is ${Opp.name}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
+            }
+        }
+
+
 
         //let roll2 = super.roll();
 
@@ -130,32 +132,32 @@ console.log(robin);
 
 // Add a static MAX_HEALTH property to the Character class, equal to 100.
 
-    // (added to character class above)
+// (added to character class above)
 
 
 // Add a static ROLES array to the Adventurer class, with the values “Fighter,” “Healer,” and “Wizard.” Feel free to add other roles, if you desire!
-    // Add a check to the constructor of the Adventurer class that ensures the given role matches one of these values.
+// Add a check to the constructor of the Adventurer class that ensures the given role matches one of these values.
 
-    //(added these to the classes above)
+//(added these to the classes above)
 
 
 // Part 5
 
-class AdventurerFactory {  
-  constructor (role) {
-    this.role = role;
-    this.adventurers = [];
-  }
-  generate (name) {
-    const newAdventurer = new Adventurer(name, this.role);
-    this.adventurers.push(newAdventurer);
-  }
-  findByIndex (index) {
-    return this.adventurers[index];
-  }
-  findByName (name) {
-    return this.adventurers.find((a) => a.name === name);
-  }
+class AdventurerFactory {
+    constructor(role) {
+        this.role = role;
+        this.adventurers = [];
+    }
+    generate(name) {
+        const newAdventurer = new Adventurer(name, this.role);
+        this.adventurers.push(newAdventurer);
+    }
+    findByIndex(index) {
+        return this.adventurers[index];
+    }
+    findByName(name) {
+        return this.adventurers.find((a) => a.name === name);
+    }
 }
 
 //const healers = new AdventurerFactory("Healer");
@@ -164,11 +166,11 @@ class AdventurerFactory {
 // Part 6
 
 // Create an additional method, duel(), for the Adventurer class with the following functionality:
-    // Accept an Adventurer as a parameter.
-    // Use the roll() functionality to create opposing rolls for each adventurer.
-    // Subtract 1 from the adventurer with the lower roll.
-    // Log the results of this “round” of the duel, including the rolls and current health values.
-    // Repeat this process until one of the two adventurers reaches 50 health.
-    // Log the winner of the duel: the adventurer still above 50 health.
+// Accept an Adventurer as a parameter.
+// Use the roll() functionality to create opposing rolls for each adventurer.
+// Subtract 1 from the adventurer with the lower roll.
+// Log the results of this “round” of the duel, including the rolls and current health values.
+// Repeat this process until one of the two adventurers reaches 50 health.
+// Log the winner of the duel: the adventurer still above 50 health.
 
 robin.duel(harry);
