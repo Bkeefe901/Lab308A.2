@@ -24,6 +24,7 @@ const adventurer = {
     },
     roll(mod = 0) {
         const result = Math.floor(Math.random() * 20) + 1 + mod;
+        return result;
         console.log(`${this.name} rolled a ${result}.`)
     }
 }
@@ -50,6 +51,7 @@ class Character {
     roll(mod = 0) {
         const result = Math.floor(Math.random() * 20) + 1 + mod;
         console.log(`${this.name} rolled a ${result}.`)
+        return result;
     }
 }
 
@@ -67,12 +69,12 @@ class Adventurer extends Character {
     static ROLES = ['Fighter', 'Healer', 'Wizard']
     constructor(name, role) {
         super(name);
-        // Adventurers have specialized roles.
-        // if(!ROLES.includes(role)){
-        //     console.log('This role does not exist!');
-        // } else{
+        //Adventurers have specialized roles.
+        if(!Adventurer.ROLES.includes(role)){
+            console.log('This role does not exist!');
+        } else{
             this.role = role;
-        //}
+        }
         
         // Every adventurer starts with a bed and 50 gold coins.
         this.inventory.push("bedroll", "50 gold coins");
@@ -84,18 +86,17 @@ class Adventurer extends Character {
         super.roll();
     }
     duel(Opp) {
-        let winner = '';
         let roll1 = super.roll();
-        let roll2 = Opp.roll();
+        let roll2 = super.roll();
         if (roll1 > roll2){
-            Opp.health -= 1;
-            winner = this.name;
+            Opp.health = Opp.health - 1;
+            console.log(`The winner of this round is ${this.name}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
             
-        } else if (roll2 > roll1){
-            super.health -= 1;
-            winner = Opp.name;
+        } else if(roll2 > roll1){
+            this.health =  this.health - 1;
+            console.log(`The winner of this round is ${Opp.name}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
         } 
-        console.log(`The winner of this round is ${winner}. ${Opp.name}'s health is now ${Opp.health} and ${this.name}'s health is ${this.health}`);
+        
         
 
         //let roll2 = super.roll();
